@@ -4,6 +4,7 @@ rightwristX = 0;
 leftwristY = 0;
 rightwristY = 0;
 scoreleftwrist = 0;
+scorerightwrist = 0;
 
 function preload()
 {
@@ -42,6 +43,9 @@ function gotPoses(results)
 
         scoreleftwrist = results[0].pose.keypoints[9].score;
         console.log("scoreleftwrist = " + scoreleftwrist);
+
+        scorerightwrist = results[0].pose.keypoints[10].score;
+        console.log("scorerightwrist = " + scorerightwrist);
     }
 }
 
@@ -60,6 +64,37 @@ function draw()
         volume = remove_decimals/500;
         document.getElementById("volume").innerHTML = "volume = " + volume;
         song.setVolume(volume);
+    }
+
+    if(scorerightwrist > 0.2)
+    {
+        circle(rightwristX, rightwristY, 20);
+
+        if(rightwristY > 0 && rightwristY <= 100)
+        {
+            document.getElementById("speed").innerHTML = "speed = 0.5x";
+            song.rate(0.5);
+        }
+        else if(rightwristY > 100 && rightwristY <= 200)
+        {
+            document.getElementById("speed").innerHTML = "speed = 1x";
+            song.rate(1);
+        }
+        else if(rightwristY > 200 && rightwristY <= 300)
+        {
+            document.getElementById("speed").innerHTML = "speed = 1.5x";
+            song.rate(1.5);
+        }
+        else if(rightwristY > 300 && rightwristY <= 400)
+        {
+            document.getElementById("speed").innerHTML = "speed = 2x";
+            song.rate(2);
+        }
+        else if(rightwristY > 400)
+        {
+            document.getElementById("speed").innerHTML = "speed = 2.5x";
+            song.rate(2.5);
+        }
     }
 }
 
